@@ -33,6 +33,7 @@ export function PomodoroTimer() {
     startPomodoro,
     pausePomodoro,
     resetPomodoro,
+    setPhase,
   } = useTimerStore()
 
   const total = TOTAL_DURATIONS[pomodoroPhase]
@@ -41,19 +42,24 @@ export function PomodoroTimer() {
 
   return (
     <div className="flex flex-col items-center gap-6 py-4">
-      {/* Phase indicator */}
-      <div className="flex gap-2">
+      {/* Phase tabs — clickable */}
+      <div className="flex gap-1 bg-zinc-900 border border-zinc-800 rounded-lg p-1">
         {(['work', 'short_break', 'long_break'] as const).map((phase) => (
-          <span
+          <button
             key={phase}
-            className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+            onClick={() => setPhase(phase)}
+            className={`text-xs font-medium px-3 py-1.5 rounded-md transition-all ${
               pomodoroPhase === phase
-                ? 'bg-indigo-500/20 text-indigo-300'
-                : 'text-zinc-500'
+                ? phase === 'work'
+                  ? 'bg-indigo-500 text-white'
+                  : phase === 'short_break'
+                  ? 'bg-emerald-500 text-white'
+                  : 'bg-blue-500 text-white'
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
             {PHASE_LABELS[phase]}
-          </span>
+          </button>
         ))}
       </div>
 
@@ -126,7 +132,8 @@ export function PomodoroTimer() {
           <Button
             variant="outline"
             size="icon"
-            title="Take a break"
+            onClick={() => setPhase('short_break')}
+            title="Skip to short break"
             className="w-9 h-9 border-zinc-700 bg-zinc-900 text-zinc-400 hover:text-emerald-400"
           >
             <Coffee className="w-4 h-4" />

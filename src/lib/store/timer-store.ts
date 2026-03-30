@@ -30,6 +30,7 @@ interface TimerStore {
   pausePomodoro: () => void
   resetPomodoro: () => void
   tickPomodoro: () => void
+  setPhase: (phase: PomodoroPhase) => void
   setTimerMode: (mode: TimerMode) => void
   // Deep work
   toggleDeepWork: () => void
@@ -117,6 +118,12 @@ export const useTimerStore = create<TimerStore>()(
             pomodoroRunning: false,
             pomodoroRemaining: POMODORO_DURATIONS[state.pomodoroPhase],
           })),
+        setPhase: (phase: PomodoroPhase) =>
+          set({
+            pomodoroPhase: phase,
+            pomodoroRemaining: POMODORO_DURATIONS[phase],
+            pomodoroRunning: false,
+          }),
 
         tickPomodoro: () => {
           const { pomodoroRemaining, pomodoroPhase, pomodoroCount } = get()
