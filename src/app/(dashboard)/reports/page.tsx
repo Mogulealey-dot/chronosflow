@@ -1,24 +1,36 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, LineChart, Line, Legend,
 } from 'recharts'
 import { useTimeEntries } from '@/lib/hooks/useTimeEntries'
 import { useProjects } from '@/lib/hooks/useProjects'
-import { formatHours, formatDuration } from '@/lib/utils/format'
+import { useProjectAnalytics } from '@/lib/hooks/useProjectAnalytics'
+import { formatHours } from '@/lib/utils/format'
 import { Badge } from '@/components/ui/badge'
 import { Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { PDFReport } from '@/components/reports/PDFReport'
 import { toast } from 'sonner'
+import { createClient } from '@/lib/supabase/client'
 
 type Range = '7d' | '30d' | '90d'
 
 export default function ReportsPage() {
   const { entries } = useTimeEntries(1000)
   const { projects } = useProjects()
+  const { data: analytics, refetch: refetchAnalytics } = useProjectAnalytics()
   const [range, setRange] = useState<Range>('30d')
+  const [userName, setUserName] = useState('')
+  const supabase = createClient()
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUserName(user?.user_metadata?.full_name ?? user?.email ?? 'User')
+    })
+  }, []) // eslint-disable-line
 
   const days = range === '7d' ? 7 : range === '30d' ? 30 : 90
 
@@ -108,8 +120,9 @@ export default function ReportsPage() {
             className="gap-1.5 h-8 border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white"
           >
             <Download className="w-3.5 h-3.5" />
-            Export
+            CSV
           </Button>
+          <PDFReport data={analytics} userName={userName} />
         </div>
       </div>
 

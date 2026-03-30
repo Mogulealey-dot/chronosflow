@@ -90,12 +90,16 @@ export function useTimer() {
     projectId: string | null,
     isBillable: boolean
   ) {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+
     // Optimistic update
     startTimer(description, projectId, isBillable)
 
     const { data, error } = await supabase
       .from('time_entries')
       .insert({
+        user_id: user.id,
         description,
         project_id: projectId,
         is_billable: isBillable,

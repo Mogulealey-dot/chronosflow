@@ -30,11 +30,23 @@ export function useProjects() {
     isBillable: boolean,
     budgetHours: number | null
   ) {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { data: null, error: new Error('Not authenticated') }
+
     const { data, error } = await supabase
       .from('projects')
-      .insert({ name, color, client_id: clientId, hourly_rate: hourlyRate, is_billable: isBillable, budget_hours: budgetHours })
+      .insert({
+        user_id: user.id,
+        name,
+        color,
+        client_id: clientId,
+        hourly_rate: hourlyRate,
+        is_billable: isBillable,
+        budget_hours: budgetHours,
+      })
       .select('*, client:clients(*)')
       .single()
+
     if (!error && data) setProjects((prev) => [...prev, data])
     return { data, error }
   }
