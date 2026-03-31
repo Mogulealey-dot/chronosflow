@@ -33,7 +33,7 @@ export function Sidebar() {
     <motion.aside
       animate={{ width: sidebarCollapsed ? 64 : 220 }}
       transition={{ duration: 0.2, ease: 'easeInOut' }}
-      className="relative flex flex-col h-full bg-zinc-950 border-r border-zinc-800/60 shrink-0 overflow-hidden"
+      className="relative hidden md:flex flex-col h-full bg-zinc-950 border-r border-zinc-800/60 shrink-0 overflow-hidden"
     >
       {/* Logo */}
       <div className="flex items-center h-14 px-4 border-b border-zinc-800/60 shrink-0">
@@ -118,5 +118,30 @@ export function Sidebar() {
         )}
       </button>
     </motion.aside>
+  )
+}
+
+export function MobileNav() {
+  const pathname = usePathname()
+
+  return (
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-zinc-950/95 backdrop-blur-sm border-t border-zinc-800/60 flex">
+      {navItems.map(({ href, label, icon: Icon }) => {
+        const active = pathname === href || pathname.startsWith(href + '/')
+        return (
+          <Link
+            key={href}
+            href={href}
+            className={cn(
+              'flex-1 flex flex-col items-center gap-1 py-2.5 text-[10px] font-medium transition-colors',
+              active ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-300'
+            )}
+          >
+            <Icon className="w-5 h-5" />
+            <span>{label}</span>
+          </Link>
+        )
+      })}
+    </nav>
   )
 }

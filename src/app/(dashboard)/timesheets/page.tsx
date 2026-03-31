@@ -88,16 +88,16 @@ export default function TimesheetsPage() {
   const totalSeconds = filtered.reduce((acc, e) => acc + (e.duration ?? 0), 0)
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-5xl mx-auto">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white">Timesheets</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Timesheets</h1>
           <p className="text-sm text-zinc-500 mt-0.5">
             {filtered.length} entries · {formatDuration(totalSeconds)} total
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {selected.size > 0 && (
             <Button
               variant="destructive"
@@ -106,7 +106,7 @@ export default function TimesheetsPage() {
               className="gap-1.5 h-8"
             >
               <Trash2 className="w-3.5 h-3.5" />
-              Delete {selected.size}
+              <span className="hidden sm:inline">Delete </span>{selected.size}
             </Button>
           )}
           <Button
@@ -116,7 +116,7 @@ export default function TimesheetsPage() {
             className="gap-1.5 h-8 border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white"
           >
             <Download className="w-3.5 h-3.5" />
-            Export CSV
+            <span className="hidden sm:inline">Export CSV</span>
           </Button>
         </div>
       </div>
@@ -140,12 +140,12 @@ export default function TimesheetsPage() {
             type="checkbox"
             checked={selected.size === filtered.length && filtered.length > 0}
             onChange={selectAll}
-            className="w-3.5 h-3.5 rounded border-zinc-600 accent-indigo-500 cursor-pointer"
+            className="w-4 h-4 rounded border-zinc-600 accent-indigo-500 cursor-pointer"
           />
           <div className="w-2" />
           <span className="flex-1 text-xs font-medium text-zinc-500 uppercase tracking-wider">Description</span>
-          <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider w-16">Billable</span>
-          <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider w-32 text-right">Time</span>
+          <span className="hidden sm:block text-xs font-medium text-zinc-500 uppercase tracking-wider w-16">Billable</span>
+          <span className="hidden sm:block text-xs font-medium text-zinc-500 uppercase tracking-wider w-32 text-right">Time</span>
           <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider w-20 text-right">Duration</span>
           <div className="w-14" />
         </div>

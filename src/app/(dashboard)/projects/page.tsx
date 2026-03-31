@@ -88,10 +88,10 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-4 sm:p-6 max-w-4xl mx-auto">
+      <div className="flex items-center justify-between mb-6 gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white">Projects</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Projects</h1>
           <p className="text-sm text-zinc-500 mt-0.5">{projects.length} active projects</p>
         </div>
         <Button onClick={openCreate} size="sm" className="bg-indigo-500 hover:bg-indigo-600 text-white gap-1.5">
@@ -156,9 +156,9 @@ export default function ProjectsPage() {
                     )}
                   </div>
 
-                  {/* Budget burn */}
+                  {/* Budget burn — desktop only */}
                   {budgetPct !== null && (
-                    <div className="w-28">
+                    <div className="hidden sm:block w-28">
                       <div className="flex justify-between text-xs text-zinc-500 mb-1">
                         <span>Budget</span>
                         <span>{budgetPct.toFixed(0)}%</span>
@@ -174,15 +174,15 @@ export default function ProjectsPage() {
                     </div>
                   )}
 
-                  {/* Rate */}
+                  {/* Rate — desktop only */}
                   {project.hourly_rate && (
-                    <span className="text-sm text-zinc-400 tabular-nums">
+                    <span className="hidden sm:inline text-sm text-zinc-400 tabular-nums">
                       ${project.hourly_rate}/hr
                     </span>
                   )}
 
                   {/* Actions */}
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                     <Button
                       size="icon"
                       variant="ghost"

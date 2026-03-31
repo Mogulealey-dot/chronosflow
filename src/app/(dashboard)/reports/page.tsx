@@ -92,13 +92,13 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-4 sm:p-6 max-w-6xl mx-auto space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white">Reports</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Reports</h1>
           <p className="text-sm text-zinc-500 mt-0.5">Analytics for the last {days} days</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {/* Range toggle */}
           <div className="flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-1">
             {(['7d', '30d', '90d'] as Range[]).map((r) => (
@@ -127,16 +127,16 @@ export default function ReportsPage() {
       </div>
 
       {/* Summary KPIs */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-3 sm:gap-4">
         {[
           { label: 'Total Tracked', value: formatHours(totalSeconds), sub: `${filtered.length} entries` },
           { label: 'Billable', value: formatHours(billableSeconds), sub: `${billableRate}% of total` },
           { label: 'Avg / Day', value: `${(totalSeconds / 3600 / days).toFixed(1)}h`, sub: `over ${days} days` },
         ].map((kpi) => (
-          <div key={kpi.label} className="rounded-xl border border-zinc-800/60 bg-zinc-900/50 p-4">
-            <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">{kpi.label}</p>
-            <p className="text-2xl font-bold text-white mt-1 tabular-nums">{kpi.value}</p>
-            <p className="text-xs text-zinc-500 mt-0.5">{kpi.sub}</p>
+          <div key={kpi.label} className="rounded-xl border border-zinc-800/60 bg-zinc-900/50 p-3 sm:p-4">
+            <p className="text-[10px] sm:text-xs font-medium text-zinc-500 uppercase tracking-wider">{kpi.label}</p>
+            <p className="text-lg sm:text-2xl font-bold text-white mt-1 tabular-nums">{kpi.value}</p>
+            <p className="text-[10px] sm:text-xs text-zinc-500 mt-0.5">{kpi.sub}</p>
           </div>
         ))}
       </div>
@@ -190,22 +190,22 @@ export default function ReportsPage() {
             return (
               <div
                 key={p.name}
-                className="flex items-center gap-4 px-5 py-3.5 border-b border-zinc-800/30 last:border-0"
+                className="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3 sm:py-3.5 border-b border-zinc-800/30 last:border-0"
               >
                 <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: p.color }} />
-                <span className="flex-1 text-sm text-zinc-200 font-medium">{p.name}</span>
-                <div className="w-32 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+                <span className="flex-1 text-sm text-zinc-200 font-medium truncate">{p.name}</span>
+                <div className="hidden sm:block w-32 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
                   <div
                     className="h-full rounded-full"
                     style={{ width: `${pct}%`, background: p.color }}
                   />
                 </div>
-                <span className="text-xs text-zinc-500 w-10 text-right">{pct.toFixed(0)}%</span>
-                <span className="font-mono text-sm text-zinc-300 tabular-nums w-16 text-right">
+                <span className="hidden sm:inline text-xs text-zinc-500 w-10 text-right">{pct.toFixed(0)}%</span>
+                <span className="font-mono text-sm text-zinc-300 tabular-nums w-16 text-right shrink-0">
                   {formatHours(p.seconds)}
                 </span>
                 {p.billable > 0 && (
-                  <Badge variant="secondary" className="text-xs bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+                  <Badge variant="secondary" className="hidden sm:inline-flex text-xs bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
                     ${((p.billable / 3600)).toFixed(0)}h billable
                   </Badge>
                 )}

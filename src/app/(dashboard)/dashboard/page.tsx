@@ -94,17 +94,17 @@ export default function DashboardPage() {
   }, [entries])
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Dashboard</h1>
           <p className="text-sm text-zinc-500 mt-0.5">
             {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
           </p>
         </div>
         {/* Timer mode toggle */}
-        <div className="flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-1">
+        <div className="flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-1 shrink-0">
           {(['tracker', 'pomodoro'] as const).map((mode) => (
             <button
               key={mode}
@@ -142,15 +142,15 @@ export default function DashboardPage() {
       )}
 
       {/* Main grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
         {/* Weekly bar */}
-        <div className="lg:col-span-2 rounded-xl border border-zinc-800/60 bg-zinc-900/50 p-5">
+        <div className="lg:col-span-2 rounded-xl border border-zinc-800/60 bg-zinc-900/50 p-4 sm:p-5">
           <h2 className="text-sm font-semibold text-zinc-300 mb-4">This Week</h2>
           <WeeklyBarChart data={weeklyData} />
         </div>
 
         {/* Project donut */}
-        <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/50 p-5">
+        <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/50 p-4 sm:p-5">
           <h2 className="text-sm font-semibold text-zinc-300 mb-1">Time by Project</h2>
           <p className="text-xs text-zinc-500 mb-3">Last 30 days</p>
           <ProjectDonut data={projectStats} />
@@ -158,7 +158,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Activity heatmap */}
-      <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/50 p-5">
+      <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/50 p-4 sm:p-5">
         <h2 className="text-sm font-semibold text-zinc-300 mb-4">Activity — Last 12 Weeks</h2>
         <ActivityHeatmap entries={entries} />
       </div>

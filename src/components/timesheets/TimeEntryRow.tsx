@@ -45,7 +45,7 @@ export function TimeEntryRow({ entry, selected, onSelect, onUpdate, onDelete }: 
         type="checkbox"
         checked={selected}
         onChange={onSelect}
-        className="w-3.5 h-3.5 rounded border-zinc-600 accent-indigo-500 cursor-pointer"
+        className="w-4 h-4 rounded border-zinc-600 accent-indigo-500 cursor-pointer shrink-0"
       />
 
       {/* Project color dot */}
@@ -78,15 +78,15 @@ export function TimeEntryRow({ entry, selected, onSelect, onUpdate, onDelete }: 
         <p className="text-xs text-zinc-500 mt-0.5">{entry.project?.name ?? 'No project'}</p>
       </div>
 
-      {/* Billable */}
+      {/* Billable — desktop only */}
       {entry.is_billable && (
-        <span className="text-xs text-emerald-400 font-medium bg-emerald-500/10 border border-emerald-500/20 rounded px-1.5 py-0.5 flex items-center gap-1">
+        <span className="hidden sm:flex text-xs text-emerald-400 font-medium bg-emerald-500/10 border border-emerald-500/20 rounded px-1.5 py-0.5 items-center gap-1">
           <DollarSign className="w-3 h-3" />
         </span>
       )}
 
-      {/* Time range */}
-      <div className="text-right text-xs text-zinc-500 tabular-nums">
+      {/* Time range — desktop only */}
+      <div className="hidden sm:block text-right text-xs text-zinc-500 tabular-nums">
         <p>{formatTime(entry.start_time)} – {entry.end_time ? formatTime(entry.end_time) : '…'}</p>
       </div>
 
@@ -96,7 +96,7 @@ export function TimeEntryRow({ entry, selected, onSelect, onUpdate, onDelete }: 
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
         {editing ? (
           <>
             <Button size="icon" variant="ghost" onClick={saveEdit} className="w-7 h-7 text-emerald-400 hover:text-emerald-300">

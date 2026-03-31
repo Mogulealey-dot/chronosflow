@@ -39,15 +39,15 @@ export function GlobalTimer() {
   }
 
   return (
-    <header className="h-14 border-b border-zinc-800/60 bg-zinc-950/95 backdrop-blur-sm flex items-center px-4 gap-3 shrink-0">
-      {/* Deep work badge */}
+    <header className="h-14 border-b border-zinc-800/60 bg-zinc-950/95 backdrop-blur-sm flex items-center px-3 sm:px-4 gap-2 sm:gap-3 shrink-0">
+      {/* Deep work badge — desktop only */}
       <AnimatePresence>
         {deepWorkActive && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 rounded-md px-2 py-1"
+            className="hidden sm:flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 rounded-md px-2 py-1"
           >
             <Zap className="w-3.5 h-3.5 text-amber-400" />
             <span className="text-xs text-amber-400 font-medium whitespace-nowrap">Deep Work</span>
@@ -66,37 +66,39 @@ export function GlobalTimer() {
         }}
       />
 
-      {/* Project picker */}
-      <Select
-        value={timer.project_id ?? 'none'}
-        onValueChange={(v) => updateProject(v === 'none' ? null : v)}
-      >
-        <SelectTrigger className="w-36 h-9 bg-zinc-900 border-zinc-700/60 text-sm text-zinc-300 focus:ring-indigo-500/50">
-          <SelectValue placeholder="No project" />
-        </SelectTrigger>
-        <SelectContent className="bg-zinc-900 border-zinc-700">
-          <SelectItem value="none" className="text-zinc-400">
-            No project
-          </SelectItem>
-          {projects.map((p) => (
-            <SelectItem key={p.id} value={p.id}>
-              <span className="flex items-center gap-2">
-                <span
-                  className="w-2 h-2 rounded-full inline-block"
-                  style={{ background: p.color }}
-                />
-                {p.name}
-              </span>
+      {/* Project picker — desktop only */}
+      <div className="hidden sm:block">
+        <Select
+          value={timer.project_id ?? 'none'}
+          onValueChange={(v) => updateProject(v === 'none' ? null : v)}
+        >
+          <SelectTrigger className="w-36 h-9 bg-zinc-900 border-zinc-700/60 text-sm text-zinc-300 focus:ring-indigo-500/50">
+            <SelectValue placeholder="No project" />
+          </SelectTrigger>
+          <SelectContent className="bg-zinc-900 border-zinc-700">
+            <SelectItem value="none" className="text-zinc-400">
+              No project
             </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+            {projects.map((p) => (
+              <SelectItem key={p.id} value={p.id}>
+                <span className="flex items-center gap-2">
+                  <span
+                    className="w-2 h-2 rounded-full inline-block"
+                    style={{ background: p.color }}
+                  />
+                  {p.name}
+                </span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-      {/* Billable toggle */}
+      {/* Billable toggle — desktop only */}
       <button
         onClick={toggleBillable}
         title={timer.is_billable ? 'Billable' : 'Non-billable'}
-        className={`w-9 h-9 rounded-lg border flex items-center justify-center transition-all ${
+        className={`hidden sm:flex w-9 h-9 rounded-lg border items-center justify-center transition-all ${
           timer.is_billable
             ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400'
             : 'bg-zinc-900 border-zinc-700/60 text-zinc-500 hover:text-zinc-300'
@@ -105,11 +107,11 @@ export function GlobalTimer() {
         <DollarSign className="w-4 h-4" />
       </button>
 
-      {/* Deep work toggle */}
+      {/* Deep work toggle — desktop only */}
       <button
         onClick={toggleDeepWork}
         title="Toggle Deep Work mode"
-        className={`w-9 h-9 rounded-lg border flex items-center justify-center transition-all ${
+        className={`hidden sm:flex w-9 h-9 rounded-lg border items-center justify-center transition-all ${
           deepWorkActive
             ? 'bg-amber-500/15 border-amber-500/40 text-amber-400'
             : 'bg-zinc-900 border-zinc-700/60 text-zinc-500 hover:text-zinc-300'
@@ -119,7 +121,7 @@ export function GlobalTimer() {
       </button>
 
       {/* Timer display */}
-      <div className="font-mono text-lg font-semibold text-zinc-100 tabular-nums w-24 text-center select-none">
+      <div className="font-mono text-base sm:text-lg font-semibold text-zinc-100 tabular-nums w-20 sm:w-24 text-center select-none shrink-0">
         {formatDuration(timer.elapsed)}
       </div>
 
@@ -128,19 +130,19 @@ export function GlobalTimer() {
         <Button
           onClick={handleStop}
           size="sm"
-          className="bg-red-500 hover:bg-red-600 text-white h-9 px-4 gap-2"
+          className="bg-red-500 hover:bg-red-600 text-white h-9 px-3 sm:px-4 gap-1.5 shrink-0"
         >
           <Square className="w-3.5 h-3.5 fill-current" />
-          Stop
+          <span>Stop</span>
         </Button>
       ) : (
         <Button
           onClick={onStart}
           size="sm"
-          className="bg-indigo-500 hover:bg-indigo-600 text-white h-9 px-4 gap-2"
+          className="bg-indigo-500 hover:bg-indigo-600 text-white h-9 px-3 sm:px-4 gap-1.5 shrink-0"
         >
           <Play className="w-3.5 h-3.5 fill-current" />
-          Start
+          <span>Start</span>
         </Button>
       )}
     </header>
